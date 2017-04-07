@@ -18,27 +18,39 @@ namespace vsrpp_6_2
         по какому-то одному полю: названию, автору, издательству.
     */
     public delegate void StartSort(UInt16 _op);
-    class BookList
+
+    public class BookList
     {
-        private List<Book> listBook;
+        public List<Book> listBook { get; set; }
 
         public BookList() { listBook = new List<Book>(); }
+                
+        public void Add(params Book[] _book)
+        {
+            foreach (Book o in _book)
+            {
+                listBook.Add(o);
+            }            
+        }
 
-        public void Sort(UInt16 _op)        {
-            List<Book> sortedBook = new List<Book>();            switch(_op)            {                case 1:                    // sort by title
-                    
-                    //listBook.Sort((x, y) => x.title.CompareTo(y.title));
-                    
-                    /*
-                    listBook.Sort( (x, y) =>
-                        x == null ? (y == null ? 0 : -1)
-                        : (y == null ? 1 : x.title.CompareTo(y.title))                        );                    */
-                    
-                    //var newList = listBook.Sort(n => n.title);
-                                        //List<Book> sortedList = listBook.OrderBy(o => o.title).ToList();                    var temp1 = from o in listBook orderby o.title select o;
-                    sortedBook = temp1.ToList();                    break;                case 2:                    // sort by author                    var temp2 = from o in listBook orderby o.title select o;
-                    sortedBook = temp2.ToList();                    break;                case 3:                    // sort by publishingHouse                    var temp3 = from o in listBook orderby o.title select o;
-                    sortedBook = temp3.ToList();                    break;                        }        }
-
+        public void Sort(UInt16 _op)
+        {
+            List<Book> sortedBook = new List<Book>();
+            switch(_op)
+            {
+                case 0:
+                    // sort by title
+                    listBook.Sort(delegate(Book b1, Book b2) { return b1.title.CompareTo(b2.title); });
+                    break;
+                case 1:
+                    // sort by author
+                    listBook.Sort(delegate(Book b1, Book b2) { return b1.author.CompareTo(b2.author); });
+                    break;
+                case 2:
+                    // sort by publishingHouse
+                    listBook.Sort(delegate(Book b1, Book b2) { return b1.publishingHouse.CompareTo(b2.publishingHouse); });
+                    break;            
+            }
+        }
     }
 }

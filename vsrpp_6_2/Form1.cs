@@ -29,31 +29,40 @@ namespace vsrpp_6_2
             по какому-то одному полю: названию, автору, издательству.
         */
         
-        //delegate void myDel(int x);
+        BookList bl = new BookList();
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            Book b = new Book();
-            StartSort sort;
-            BookList bl = new BookList();
-            sort = new StartSort(bl.Sort);            
-            
-            sort(1);
-            // must print;
+            Book item1 = new Book("encyclopedy","dal","moscow");
+            Book item2 = new Book("perfect code", "macconel", "san francisko");
+            Book item3 = new Book("sherlok holmes", "jack london", "berminghem");
+            Book item4 = new Book("skazki", "barto", "paris");
+            bl.Add(item1, item2, item3, item4);
 
-            sort(2);
-            // must print;
-
-            sort(3);
-            // must print;
-
-
-            //myDel md = new myDel(start);
-            //md(10);
+            comboBox1.SelectedIndex = 0;
         }
-        /*
-        static void start(int x)
-        { x = 10; }
-        static void stop(int x)
-        { x = 0; }*/
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (textBox1.Text != "" && textBox2.Text != "" && textBox3.Text != "")
+            {
+                Book item = new Book(textBox1.Text, textBox2.Text, textBox3.Text);
+                bl.Add(item);
+            }
+            else { throw new Exception("Some fialds are empty!"); }
+        }        
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            listBox1.Items.Clear();
+            StartSort sortDelegateItem;
+            sortDelegateItem = new StartSort(bl.Sort);
+            sortDelegateItem((UInt16)comboBox1.SelectedIndex);
+
+            for (int i = 0; i < bl.listBook.Count; ++i)
+            {
+                listBox1.Items.Add(bl.listBook[i].ToString());
+            }            
+        }
     }
 }

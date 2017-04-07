@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace vsrpp_6_2
 {
-    class Book
+    public class Book
     {
          /*
             2. Написать делегат, с помощью которого реализуется сортировка
@@ -36,6 +36,14 @@ namespace vsrpp_6_2
             this.title = _t;
             this.author = _a;
             this.publishingHouse = _ph;
-        }        
+        }
+
+        public String ToString()
+        {
+            return String.Concat(
+                "Title: ", this.title, 
+                "; Author: ", this.author,
+                ": Publishing House: ", this.publishingHouse);
+        }
     }
 }
